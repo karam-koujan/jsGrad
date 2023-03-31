@@ -58,6 +58,17 @@ class Value{
 		return result 
  
 	}
+	backward(){
+		function topoSort(v){
+                   let result = [] 
+		   let visited = []
+		   let isVisited = visited.indexOf(v)	
+		   if 	
+
+		}
+
+
+	}
 
 }
 
