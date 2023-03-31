@@ -51,19 +51,31 @@ class Perceptron{
             this.weight = w
 	    this.bias = new Value(0)
 	    this.nin = nin 
-	    this.output = undefined
 	}
 	call(x){
 		let sum = new Value(0) 
 		for(let i = 0 ; i < this.nin;i++){
 		    sum = sum.add(this.weight[i].multiply(x[i])) 
 		}
-		this.output = sum.add(this.bias).tanh()
+		return sum.add(this.bias).tanh()
 	}
 
 }
 
+class Layer{
+	constructor(nin,nout){
+		this.neurons = [] 
+		for(let i = 0 ; i < nout;i++){
+			this.neurons.push(new Perceptron(nin))
+		}
+	}
+	call(x){
+	     let out = this.neurons.map(neuron=>neuron.call(x))
+	     return out.length === 1 ? out[0] : out	
+	 }
+}
+
 const x = [new Value(2),new Value(5)]
-const p = new Perceptron(2)
-p.call(x)
-console.log(p)
+const l = new Layer(2,2)
+let d = l.call(x)
+console.log(d)
