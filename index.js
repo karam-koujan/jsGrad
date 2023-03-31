@@ -3,39 +3,59 @@ class Value{
 	constructor(value,operation=""){
            this.value = value 
 	   this.operation = operation  
-           this.grad = operation ? 1 : undefined 
+           this.grad = 0 ; 
+	   this.backward = ()=> undefined
 	   	
 	}
 	add(other){
            let result = new Value(this.value + other.value,"+")
-           this.grad = result.grad * this.grad 
-	   other.grad = result.grad * this.grad	
+	  function  backward(){
+                    this.grad += result.grad * this.grad 
+	            other.grad += result.grad * this.grad	
+		}
+	   this.backward = backward 
 	   return result 
 	}
 	multiply(other){
 	    let result = new Value(this.value * other.value,"*")
-            this.grad = other.value * result.grad 
-	    other.grad = this.value * result.grad 
+	   function backward(){
+               this.grad += other.value * result.grad 
+	       other.grad += this.value * result.grad 
+              }
+          	
+	    this.backward = backward	
 	    return result 
 
 	}
 	exp(){  	
 	  let result = new Value(Math.exp(this.value),"exp")
-	   this.grad = result.value * this.grad 
-	    	
+	  function backward(){
+            this.grad += result.value * this.grad 
+
+	   }
+	   this.backward = backward	    	
 	   return result 
 
 	}
 	pow(n){
           let result = new Value(Math.pow(this.value,n.value),"pow")
-	  this.grad = n.value * Math.pow(this.value,n.value - 1) * result.grad 
-	  return result 
+	   function backward(){
+           this.grad += n.value * Math.pow(this.value,n.value - 1) * result.grad
+	  }
+	  this.backward = backward 
+      	  return result 
 	}
 	tanh(){
 	   let z = this.value 
            let result = new Value((Math.exp(z) - Math.exp(-z) ) / (Math.exp(z) + Math.exp(-z)),"tanh") 
-	  this.grad = (1 - Math.pow(result.value,2)) * this.grad
-	  return result 
+		function backward(){
+	       this.grad += (1 - Math.pow(result.value,2)) * this.grad
+
+		}  
+          this.backward = backward
+        
+	  
+		return result 
  
 	}
 
