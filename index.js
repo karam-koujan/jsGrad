@@ -1,23 +1,23 @@
 
 class Value{
-	constructor(value,operation=""){
+	constructor(value,children=[],operation=""){
            this.value = value 
 	   this.operation = operation  
            this.grad = 0 ; 
 	   this.backward = ()=> undefined
-	   	
+	   this.prev = children 
 	}
 	add(other){
-           let result = new Value(this.value + other.value,"+")
+           let result = new Value(this.value + other.value,[this,other],"+")
 	  function  backward(){
                     this.grad += result.grad * this.grad 
 	            other.grad += result.grad * this.grad	
 		}
-	   this.backward = backward 
-	   return result 
+	   this.backward = backward
+	   return result
 	}
 	multiply(other){
-	    let result = new Value(this.value * other.value,"*")
+	    let result = new Value(this.value * other.value,[this,other],"*")
 	   function backward(){
                this.grad += other.value * result.grad 
 	       other.grad += this.value * result.grad 
@@ -28,7 +28,7 @@ class Value{
 
 	}
 	exp(){  	
-	  let result = new Value(Math.exp(this.value),"exp")
+	  let result = new Value(Math.exp(this.value),[this],"exp")
 	  function backward(){
             this.grad += result.value * this.grad 
 
@@ -38,7 +38,7 @@ class Value{
 
 	}
 	pow(n){
-          let result = new Value(Math.pow(this.value,n.value),"pow")
+          let result = new Value(Math.pow(this.value,n.value),[this],"pow")
 	   function backward(){
            this.grad += n.value * Math.pow(this.value,n.value - 1) * result.grad
 	  }
@@ -47,7 +47,7 @@ class Value{
 	}
 	tanh(){
 	   let z = this.value 
-           let result = new Value((Math.exp(z) - Math.exp(-z) ) / (Math.exp(z) + Math.exp(-z)),"tanh") 
+           let result = new Value((Math.exp(z) - Math.exp(-z) ) / (Math.exp(z) + Math.exp(-z)),[this],"tanh") 
 		function backward(){
 	       this.grad += (1 - Math.pow(result.value,2)) * this.grad
 
@@ -111,7 +111,7 @@ class MLP{
 	  return out  	
 	}
 }
-
-let x = [new Value(2),new Value(5)]
-let nn = new MLP(2,[2,1])
-console.log(nn.call(x))
+let a = new Value(2)
+let b = new Value(5)
+c = a.multiply(b)
+console.log(c)
