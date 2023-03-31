@@ -62,7 +62,7 @@ class Value{
 }
 
 
-class Perceptron{
+class Neuron{
 	constructor(nin){
 	    let w = [] 
 	     for(let i = 0 ; i < nin;i++){
@@ -86,7 +86,7 @@ class Layer{
 	constructor(nin,nout){
 		this.neurons = [] 
 		for(let i = 0 ; i < nout;i++){
-			this.neurons.push(new Perceptron(nin))
+			this.neurons.push(new Neuron(nin))
 		}
 	}
 	call(x){
