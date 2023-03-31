@@ -75,7 +75,23 @@ class Layer{
 	 }
 }
 
-const x = [new Value(2),new Value(5)]
-const l = new Layer(2,2)
-let d = l.call(x)
-console.log(d)
+class MLP{
+	constructor(nin,nouts){
+           this.size = [nin,...nouts]
+	   this.layers = [] 
+		for(let i = 0 ; i < nouts.length;i++){
+			this.layers.push(new Layer(this.size[i],this.size[i+1]))
+		}
+	}
+	call(x){
+	  let out = x ; 
+	  for(let i = 0 ; i < this.layers.length;i++){
+             out = this.layers[i].call(out) 
+	   }
+	  return out  	
+	}
+}
+
+let x = [new Value(2),new Value(5)]
+let nn = new MLP(2,[2,1])
+console.log(nn.call(x))
