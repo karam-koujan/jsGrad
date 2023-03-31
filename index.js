@@ -58,15 +58,26 @@ class Value{
 		return result 
  
 	}
-	backward(){
+	backprop(){
+          	let visited = []
+                let topo = []
 		function topoSort(v){
-                   let result = [] 
-		   let visited = []
-		   let isVisited = visited.indexOf(v)	
-		   if 	
-
+		 let isVisited = visited.some(ele=>Object.is(ele,v))
+			if(!isVisited){
+                           visited.push(v) 
+				for(let child of v.prev){
+					topoSort(child)
+				}
+                          topo.push(v)  
+			}
 		}
-
+		topoSort(this)
+		topo.reverse()
+		console.log(topo)
+		this.grad = 1 
+		for(let element of topo){
+			element.backward()
+		}
 
 	}
 
@@ -124,5 +135,8 @@ class MLP{
 }
 let a = new Value(2)
 let b = new Value(5)
+let e = new Value(6)
 c = a.multiply(b)
-console.log(c)
+v = c.add(e)
+v.backprop()
+
