@@ -1,0 +1,14 @@
+{
+  "name": "jsGrad",
+  "version": "1.0.0",
+  "description": "jsGrad is a simple liberary that calculate gradient using the backpropagation algorithm",
+  "main": "index.js",
+  "author": "karam_kaku",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "scripts":{
+     "dev" : "nodemon index.js"	  
+  }
+}
