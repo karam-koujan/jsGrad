@@ -10,8 +10,8 @@ class Value{
 	add(other){
            let result = new Value(this.value + other.value,[this,other],"+")
 	  function  backward(){
-                    this.grad += result.grad * this.grad 
-	            other.grad += result.grad * this.grad	
+                    this.grad += result.grad 
+	            other.grad += result.grad 
 		}
 	   this.backward = backward
 	   return result
@@ -73,7 +73,6 @@ class Value{
 		}
 		topoSort(this)
 		topo.reverse()
-		console.log(topo)
 		this.grad = 1 
 		for(let element of topo){
 			element.backward()
@@ -137,6 +136,7 @@ let a = new Value(2)
 let b = new Value(5)
 let e = new Value(6)
 c = a.multiply(b)
-v = c.add(e)
+av = c.multiply(e)
+v = av.add(e)
 v.backprop()
-
+console.log(av)
