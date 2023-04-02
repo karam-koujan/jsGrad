@@ -16,6 +16,9 @@ class Neuron{
 		}
 		return sum.add(this.bias).tanh()
 	}
+	params(){
+	   return [...this.weight,this.bias] 	
+	}
 }
 class Layer{
 	constructor(nin,nout){
@@ -28,6 +31,9 @@ class Layer{
 	     let out = this.neurons.map(neuron=>neuron.call(x))
 	     return out.length === 1 ? out[0] : out	
 	 }
+	params(){
+           return this.neurons.map(neuron=>neuron.params()).flat()
+	}
 }
 
 class MLP{
@@ -46,6 +52,9 @@ class MLP{
              out = this.layers[i].call(out) 
 	   }
 	  return out  	
+	}
+	params(){
+             return this.layers.map(layer=>layer.params()).flat()
 	}
 }
 
