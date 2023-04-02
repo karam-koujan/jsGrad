@@ -1,3 +1,22 @@
+let {Value} = require("./value")
+class Neuron{
+	constructor(nin){
+	    let w = [] 
+	     for(let i = 0 ; i < nin;i++){
+		w.push( new Value(Math.random() * 1) )	
+	    }	
+            this.weight = w
+	    this.bias = new Value(0)
+	    this.nin = nin 
+	}
+	call(x){
+		let sum = new Value(0) 
+		for(let i = 0 ; i < this.nin;i++){
+		    sum = sum.add(this.weight[i].multiply(x[i])) 
+		}
+		return sum.add(this.bias).tanh()
+	}
+}
 class Layer{
 	constructor(nin,nout){
 		this.neurons = [] 
@@ -20,7 +39,9 @@ class MLP{
 		}
 	}
 	call(x){
-	  let out = x ; 
+	  	
+	  let out = x.map(ele=>new Value(ele)) ;
+	  
 	  for(let i = 0 ; i < this.layers.length;i++){
              out = this.layers[i].call(out) 
 	   }
