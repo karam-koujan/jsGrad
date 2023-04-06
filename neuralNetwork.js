@@ -62,7 +62,6 @@ class MLP extends Module{
 		}
 	}
 	call(x){
-	  	
 	  let out = x.map(ele=>new Value(ele)) ;
 	  for(let i = 0 ; i < this.layers.length;i++){
              out = this.layers[i].call(out) 

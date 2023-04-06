@@ -2,7 +2,7 @@ class Value{
 	constructor(value,children=[],operation=""){
            this.value = value 
 	   this.operation = operation  
-           this.grad = 1 ; 
+           this.grad = 1; 
 	   this.backward = ()=> undefined
 	   this.prev = children 
 	}
@@ -39,7 +39,7 @@ class Value{
 	exp(){  	
 	  let result = new Value(Math.exp(this.value),[this],"exp")
 	  function backward(){
-            this.grad += result.value * this.grad 
+            this.grad += result.value * result.grad  
 
 	   }
 	   this.backward = backward	    	
@@ -82,9 +82,7 @@ class Value{
 		}
 		topoSort(this)
 		topo.reverse()
-		
 		this.grad = 1
-		console.log("grad",this.grad)
 		for(let element of topo){
 			element.backward()
 		}
@@ -92,7 +90,7 @@ class Value{
 	}
 	relu(){
 		let z = this.value
-let result = new Value(z <= 0 ? 0 : z, [this],"relu" )
+                let result = new Value(z <= 0 ? 0 : z, [this],"relu" )
 		function backward(){
                  this.grad +=    result.value * result.grad  
 		}
