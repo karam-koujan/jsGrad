@@ -27,6 +27,10 @@ class Neuron extends Module{
 	call(x){
 		let sum = new Value(0)
 		for(let i = 0 ; i < this.nin;i++){
+			if (!(x instanceof Array)){
+				sum = sum.add(this.weight[i]).multiply(new Value(x))
+				break 
+			}	
 		    sum = sum.add(this.weight[i].multiply(x[i])) 
 		}
 		return sum.add(this.bias).relu()
@@ -45,7 +49,7 @@ class Layer extends Module{
 	}
 	call(x){
 	     let out = this.neurons.map(neuron=>neuron.call(x))
-	     return out	
+	     return out.length === 1 ? out[0] : out  	
 	 }
 	params(){
            return this.neurons.map(neuron=>neuron.params()).flat()
@@ -64,7 +68,12 @@ class MLP extends Module{
 	call(x){
 	  let out = x.map(ele=>new Value(ele)) ;
 	  for(let i = 0 ; i < this.layers.length;i++){
-             out = this.layers[i].call(out) 
+		  if(!(out instanceof Array)){
+		     console.log(out instanceof Array) 
+                     out = [].push(out) 
+		  }
+		out = this.layers[i].call(out)
+
 	   }
 	  return out  	
 	}
