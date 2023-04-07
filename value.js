@@ -2,7 +2,7 @@ class Value{
 	constructor(value,children=[],operation=""){
            this.value = value 
 	   this.operation = operation  
-           this.grad = 1; 
+           this.grad = 0; 
 	   this.backward = ()=> undefined
 	   this.prev = children 
 	}

@@ -32,3 +32,9 @@ for(let i = 0 ; i < numberOfIterations ; i++){
 	}
 
 }
+
+let a = new Value(5) 
+let b = new Value(4)
+let c = a.multiply(b)
+c.backprop()
+console.log(a.grad)

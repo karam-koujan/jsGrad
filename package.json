@@ -6,9 +6,11 @@
   "author": "karam_kaku",
   "license": "MIT",
   "devDependencies": {
+    "jest": "^29.5.0",
     "nodemon": "^2.0.22"
   },
-  "scripts":{
-     "dev" : "nodemon index.js"	  
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test" : "jest"
   }
 }
