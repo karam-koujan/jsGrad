@@ -12,7 +12,7 @@ JsGrad is a compact library designed to assist in the calculation of gradients t
    // gradients calulation with backpropagation 
    c.backprop()
    console.log(a.grad) // 4
-   console.log(b.grad) 5
+   console.log(b.grad) // 5
 
 ```
 ## Building a Basic Neural Network
